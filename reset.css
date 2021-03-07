@@ -1,0 +1,16 @@
+/* === reboot === */
+
+*, *:before, *:after { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; margin: 0; padding: 0; }
+html, body { min-height: 100vh; }
+body { min-width: 320px; font-family: "Times New Roman", Times, serif; font-size: 18px; color: #333; background-color: white; }
+h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+section, article, aside, header, footer, nav, main { display: block; }
+button, input[type="button"], input[type="submit"] { cursor: pointer; }
+button, label { -khtml-user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; -o-user-select: none; user-select: none; }
+ul, ol { list-style: none; }
+a { color: inherit; text-decoration: none; }
+input[type="checkbox"], input[type="radio"] { display: none; }
+[hidden] { display: none !important; }
+:focus, :active { outline: none; }
+
+/* ---------------------------------------- */
