@@ -15,7 +15,12 @@ body {
 [hidden] {
   display: none !important;
 }
-
+center > table[width="970"] {
+  height: 0;
+  display: block;
+  overflow: hidden;
+  opacity: 0;
+}
 
 .shopFrame {
   display: block;
