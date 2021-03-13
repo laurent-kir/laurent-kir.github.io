@@ -1,0 +1,782 @@
+@charset "utf-8";
+
+@keyframes target {0%, 10% {background-color: #ebd660;}100% {background-color: #ebe7cf;}}
+@keyframes loading {0% {transform: rotate(0);}100% {transform: rotate(360deg);}}
+
+html, body {
+  overflow-y: visible !important;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #ddd9cd;
+  overflow-x: hidden;
+}
+[hidden] {
+  display: none !important;
+}
+
+
+.shopFrame {
+  display: block;
+  width: 100%;
+  height: 0;
+  border: none;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+
+.shop-table {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 13px;
+  max-width: 1024px;
+  margin: 1em auto;
+  padding: 1px;
+  color: #592c08;
+}
+.shop-table * {
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+}
+.shop-table *,
+.shop-table *:before,
+.shop-table *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.shop-table a {
+  color: inherit;
+  text-decoration: none;
+}
+.shop-table .td-u {
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+}
+.shop-table a:hover,
+.shop-table a:focus,
+.shop-table .selected {
+  color: #b00;
+}
+.shop-table .selected {
+  font-weight: bold;
+}
+.shop-table :focus {
+  outline: none;
+}
+.shop__main {
+  position: relative;
+  margin-right: 15em;
+  margin-bottom: 1em;
+  text-align: left;
+  border: 1px solid #888;
+}
+
+/* tabs */
+
+.shop__tabs {
+  border-bottom: 1px solid #888;
+  overflow: hidden;
+}
+.shop__tab {
+  width: 33.333%;
+  float: left;
+  padding: 10px 6px;
+  text-align: center;
+  background-color: #eee;
+  border-right: 1px solid #888;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.shop__tab:last-child {
+  border-right: none;
+}
+.shop__tab:hover,
+.shop__tab:focus,
+.shop__tab.selected {
+  background-color: #fff;
+}
+
+/* navigation */
+
+.shop__nav-wrap {
+  width: 15em;
+  position: absolute;
+  top: -1px; bottom: 0; left: 100%;
+  padding-left: 4px;
+}
+.shop__nav-box {
+  width: 100%;
+  position: -webkit-sticky;
+  position: sticky;
+  top: -1px;
+  border: 1px solid #888;
+  -webkit-box-shadow: 2px 2px 4px #aaa;
+  box-shadow: 2px 2px 4px #aaa;
+}
+.shop__nav-box > .shop__tab {
+  width: auto;
+  float: none;
+  background-color: #ddd;
+  border-right: none;
+  border-bottom: 1px solid #888;
+  cursor: default;
+}
+.shop__nav {
+  position: relative;
+  background-color: #eee;
+  overflow: hidden;
+}
+.shop__nav > a {
+  display: block;
+  height: 26px;
+  line-height: 24px;
+  padding: 0 4px;
+  border-top: 1px solid silver;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.shop__nav > a:first-child {
+  border-top: none;
+}
+.shop__nav > a:hover,
+.shop__nav > a:focus {
+  background-color: #fff;
+}
+.shop__nav > [href="#"] {
+  font-weight: bold;
+  color: #b00;
+  background-color: #fff;
+}
+.shop__nav > a:before {
+  content: "";
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+  background: url("https://i.ibb.co/NtwYq4d/nav-icons.png") no-repeat 0 0;
+  -webkit-background-size: cover;
+  background-size: cover;
+  -webkit-filter: sepia(.8);
+  filter: sepia(.8);
+  opacity: .8;
+}
+.shop__nav > a:hover:before,
+.shop__nav > a:focus:before,
+.shop__nav > [href="#"]:before {
+  opacity: 1;
+  -webkit-filter: sepia(0) brightness(120%);
+  filter: sepia(0) brightness(120%);
+}
+#s-helm:before {background-position: 0 0;}
+#s-necklace:before {background-position: 10% 0;}
+#s-cuirass:before {background-position: 20% 0;}
+#s-cloack:before {background-position: 30% 0;}
+#s-weapon:before {background-position: 40% 0;}
+#s-shield:before {background-position: 50% 0;}
+#s-boots:before {background-position: 60% 0;}
+#s-ring:before {background-position: 70% 0;}
+#s-other:before {background-position: 80% 0;}
+#s-gift:before {background-position: 90% 0;}
+#s-transport:before {background-position: 100% -2px;}
+
+#nav-flag {
+  position: absolute;
+  top: 0; right: 2px;
+  height: 26px;
+  background-color: #867157;
+  pointer-events: none;
+  opacity: 0;
+  -webkit-transition: top 0.2s, opacity 1s;
+  transition: top 0.2s, opacity 1s;
+}
+#nav-flag:before {
+  content: "";
+  position: absolute;
+  top: 7px; right: 0;
+  border: 6px solid transparent;
+  border-right-color: #867157;
+}
+.shop__nav > [href="#"] ~ #nav-flag,
+.shop__nav > a:hover ~ #nav-flag,
+.shop__nav > a:focus ~ #nav-flag {
+  opacity: 1;
+}
+#s-helm[href="#"] ~ #nav-flag, a#s-helm:focus ~ #nav-flag, #s-helm[href]:hover ~ #nav-flag {top: 0;}
+#s-necklace[href="#"] ~ #nav-flag, a#s-necklace:focus ~ #nav-flag, #s-necklace[href]:hover ~ #nav-flag {top: 26px;}
+#s-cuirass[href="#"] ~ #nav-flag, a#s-cuirass:focus ~ #nav-flag, #s-cuirass[href]:hover ~ #nav-flag {top: 52px;}
+#s-cloack[href="#"] ~ #nav-flag, a#s-cloack:focus ~ #nav-flag, #s-cloack[href]:hover ~ #nav-flag {top: 78px;}
+#s-weapon[href="#"] ~ #nav-flag, a#s-weapon:focus ~ #nav-flag, #s-weapon[href]:hover ~ #nav-flag {top: 104px;}
+#s-shield[href="#"] ~ #nav-flag, a#s-shield:focus ~ #nav-flag, #s-shield[href]:hover ~ #nav-flag {top: 130px;}
+#s-boots[href="#"] ~ #nav-flag, a#s-boots:focus ~ #nav-flag, #s-boots[href]:hover ~ #nav-flag {top: 156px;}
+#s-ring[href="#"] ~ #nav-flag, a#s-ring:focus ~ #nav-flag, #s-ring[href]:hover ~ #nav-flag {top: 182px;}
+#s-other[href="#"] ~ #nav-flag, a#s-other:focus ~ #nav-flag, #s-other[href]:hover ~ #nav-flag {top: 208px;}
+#s-gift[href="#"] ~ #nav-flag, a#s-gift:focus ~ #nav-flag, #s-gift[href]:hover ~ #nav-flag {top: 234px;}
+#s-transport[href="#"] ~ #nav-flag, a#s-transport:focus ~ #nav-flag, #s-transport[href]:hover ~ #nav-flag {top: 260px;}
+
+/* filter */
+
+.shop__filter {
+  padding: 4px 6px;
+  background-color: #ddd;
+  border-bottom: 1px solid #888;
+  overflow: hidden;
+}
+.shop__filter > span {
+  color: #266d3c;
+  line-height: 20px;
+}
+.shop__filter > span:empty {
+  display: none;
+}
+.shop__filter > span:before {
+  content: "Совпадений найдено: ";
+}
+#shop__filter {
+  width: 200px;
+  height: 22px;
+  padding: 1px 2em 1px 2px;
+  float: right;
+  background: url("https://i.ibb.co/Zfm1bft/search.png") no-repeat 99% 2px #fff;
+  -webkit-background-size: 16px;
+  background-size: 16px;
+  border: 1px solid #888;
+  transition: background-position .4s;
+}
+#shop__filter:hover,
+#shop__filter:focus {
+  outline: 1px solid #5fb4d6;
+}
+#shop__filter:focus {
+  padding-right: 2px;
+  background-position: 112% 2px;
+}
+
+/* arts */
+
+.shop__arts-box {
+  min-height: 20em;
+  background-color: #fff;
+}
+.art {
+  position: relative;
+  padding: 8px 0;
+  text-align: left;
+  border-top: 1px solid #888;
+  overflow: hidden;
+}
+.art:first-child,
+.art:not([hidden]) {
+  border-top-width: 0;
+}
+.art:nth-child(even) {
+  background-color: #f2f2f2;
+}
+.art.art--target {
+  background-color: #ebe7cf;
+  animation: target 1s ease-out;
+}
+.art:not([hidden]) ~ .art {
+  border-top-width: 1px;
+}
+#art-reset_tube {
+  display: none;
+}
+
+.art__block {
+  float: left;
+  overflow: hidden;
+}
+.art__block--left {
+  width: 120px;
+}
+.art__block--right {
+  width: 60px;
+  float: right;
+  user-select: none;
+}
+.art__block--center {
+  width: 68%;
+  width: -webkit-calc(100% - 180px);
+  width: -moz-calc(100% - 180px);
+  width: calc(100% - 180px);
+  padding: 0 6px;
+}
+
+/* image */
+
+.art__img {
+  display: block;
+  position: relative;
+  width: 106px;
+  height: 106px;
+  margin: 2px auto;
+  background: url("https://dcdn1.heroeswm.ru/i/art_fon_200x200.png") center;
+  background-color: #e5d2a0;
+  -webkit-background-size: contain;
+  background-size: contain;
+  border: 3px ridge #aaa;
+  overflow: hidden;
+  z-index: 2;
+}
+.art__img[href$="ng_el_b"] {
+  background-image: url("https://dcdn1.heroeswm.ru/i/art_ny_fon_200x200.png");
+}
+.art[id$="_scroll"]:not(#art-energy_scroll) .art__img {
+  background-image: url("https://www.heroeswm.ru/i/scrolls/scroll_fon.png");
+}
+.art__img > span:first-child {
+  display: block;
+  height: 100%;
+  background: no-repeat center;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+.art__img:hover > span:first-child,
+.art__img:focus > span:first-child {
+  -webkit-filter: brightness(1.3);
+  filter: brightness(1.3);
+}
+
+/* craftBox */
+
+.art__craft-box {
+  position: absolute;
+  right: 2px; bottom: 2px;
+  font-size: 0;
+}
+.art__craft {
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin-bottom: 2px;
+  background: no-repeat center;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+.art__craft--I3 {background-image: url("https://dcdn3.heroeswm.ru/i/mods/weapon/I3.gif");}
+.art__craft--D3 {background-image: url("https://dcdn3.heroeswm.ru/i/mods/armor/D3.gif");}
+.art__craft--N10 {background-image: url("https://dcdn3.heroeswm.ru/i/mods/neutral/N10.gif");}
+.art__craft--E10 {background-image: url("https://dcdn3.heroeswm.ru/i/mods/neutral/E10.gif");}
+.art__craft--A10 {background-image: url("https://dcdn3.heroeswm.ru/i/mods/neutral/A10.gif");}
+.art__craft--W10 {background-image: url("https://dcdn3.heroeswm.ru/i/mods/neutral/W10.gif");}
+.art__craft--F10 {background-image: url("https://dcdn3.heroeswm.ru/i/mods/neutral/F10.gif");}
+
+
+.art__name,
+.art__type {
+  color: #bf642f;
+}
+.art__name {
+  line-height: 1.6;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* buyBox */
+
+.art__buy {
+  margin-top: 6px;
+  padding: 6px 0;
+  color: #888;
+  border: 1px dashed silver;
+  border-width: 1px 0;
+  overflow: hidden;
+}
+.art__buy > a:not(:last-child) {
+  margin-right: 4px;
+}
+.art__buy > a:not(.a-link):before {
+  content: "[";
+}
+.art__buy > a:not(.a-link):after {
+  content: "]";
+}
+.a-buy:not([href="#"]) {
+  color: #82634b;
+  font-weight: bold;
+}
+.art__buy > [href="#"] {
+  pointer-events: none;
+}
+
+.art__btn[class] {
+  display: inline-block;
+  position: relative;
+  min-width: 140px;
+  line-height: 28px;
+  font-size: 14px;
+  padding: 0 6px;
+  text-align: center;
+  color: #555;
+  background-color: #f3e9d1;
+  border: 2px solid #999;
+  border-color: #999 #666 #777 #999;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+.art__btn:nth-child(2) {
+  float: right;
+  margin-right: 2px;
+}
+.art__btn[tabindex="-1"] {
+  cursor: default;
+  color: #888 !important;
+  background-color: #ddd;
+  border-color: #aaa #bbb #bbb #aaa;
+  pointer-events: none;
+  user-select: none;
+}
+.art__btn:not([tabindex="-1"]):hover,
+.art__btn:not([tabindex="-1"]):focus {
+  color: #753e3e;
+  background-color: #eadec0;
+  box-shadow: 0 0 3px #aaa;
+}
+.art__btn:not([tabindex="-1"]):active {
+  top: 1px; left: 1px;
+}
+.art__btn:not([tabindex="-1"]):after {
+  content: "";
+  position: absolute;
+  top: 2px; right: 2px; bottom: 2px; left: 2px;
+  border: 1px dashed #999;
+}
+
+/* purchase */
+
+.art__purchase {
+  position: relative;
+  padding: 6px 0;
+  text-indent: 25px;
+  border-bottom: 1px dashed silver;
+  overflow: hidden;
+}
+.art__purchase--success {
+  text-indent: 0;
+  transition: text-indent 1s .5s;
+}
+.art__purchase:before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  left: 1px;
+  text-indent: 0;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  border: 3px solid #888;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: loading .8s linear infinite;
+}
+.art__purchase--success:before {
+  content: "✓";
+  background-color: #519551;
+  border-width: 0;
+  opacity: 0;
+  transition: opacity 1s .5s;
+  animation: none;
+}
+.a-purchase {
+  color: #478249;
+}
+.a-purchase:before {
+  content: "Артефактов приобретено: ";
+  color: brown;
+}
+
+/* rent */
+
+.art__rent {
+  padding: 3px 2px 3px 0;
+  line-height: 30px;
+  border-bottom: 1px dashed silver;
+  overflow: hidden;
+}
+.rent__select {
+  margin-left: 6px;
+  background-color: #fff9f1;
+  border: 2px solid #999;
+}
+.rent__select:hover,
+.rent__select:focus {
+  color: #eee;
+  background-color: #555;
+  border-color: #69a0d1;
+}
+.rent__select::-webkit-scrollbar {
+  width: 6px;
+  background-color: #777;
+}
+.rent__select::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+}
+.rent__select > :checked {
+  background-color: #a96262;
+}
+.art__rent > .art__btn {
+  float: right;
+  font-size: 13px;
+  min-width: 150px;
+}
+
+/* properties */
+
+.art__properties {
+  margin-top: 6px;
+}
+.art__prop {
+  color: #82634b;
+  font-weight: bold;
+}
+.art__prop > span {
+  font-weight: normal;
+  color: #9c5959;
+}
+.art__modifiers {
+  padding-left: 8px;
+}
+.art__modifiers:nth-child(2) {
+  margin-top: 3px;
+}
+.art__modifiers:before {
+  display: block;
+  color: #777;
+  line-height: 1.8;
+  font-style: italic;
+}
+.art__modifiers--primary:before {
+  content: "Первичные";
+}
+.art__modifiers--secondary:before {
+  content: "Вторичные";
+}
+.modifier {
+  padding-left: 6px;
+}
+.art__modifiers--primary > .modifier {
+  display: inline-block;
+  padding-left: 0;
+  margin: 0 2px;
+}
+.art__modifiers--primary > .modifier:before {
+  content: "";
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 3px;
+  background-position: center;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+.modifier--attack:before {background-image: url("https://dcdn.heroeswm.ru/i/icons/attr_attack.png?v=1");}
+.modifier--defense:before {background-image: url("https://dcdn.heroeswm.ru/i/icons/attr_defense.png?v=1");}
+.modifier--magicpower:before {background-image: url("https://dcdn.heroeswm.ru/i/icons/attr_magicpower.png?v=1");}
+.modifier--knowledge:before {background-image: url("https://dcdn.heroeswm.ru/i/icons/attr_knowledge.png?v=1");}
+.modifier--fortune:before {background-image: url("https://dcdn.heroeswm.ru/i/icons/attr_fortune.png?v=1");}
+.modifier--morale:before {background-image: url("https://dcdn.heroeswm.ru/i/icons/attr_morale.png?v=1");}
+.modifier--initiative:before {background-image: url("https://dcdn.heroeswm.ru/i/icons/attr_initiative.png?v=1");}
+
+.art__modifiers--secondary > .modifier:before,
+.art__modifiers--extra > .modifier:before {
+  content: "•";
+  margin-right: 5px;
+  opacity: .8;
+}
+.art__modifiers--secondary span,
+.art__modifiers--extra span,
+.art__descr > span {
+  color: #287275;
+}
+
+
+.art__descr {
+  font-family: Cambria, Times, serif;
+  font-style: italic;
+  font-size: 1.3em;
+  margin: 12px 0 6px;
+  padding: 6px 0;
+  color: #8a632e;
+  border-top: 1px solid silver;
+  border-bottom: 1px solid silver;
+}
+.boosterAlert {
+  font-size: .9em;
+  font-style: normal;
+  margin-top: 1em;
+  color: #777;
+}
+.art__cost {
+  text-align: right;
+  user-select: none;
+}
+.art__properties + .art__cost {
+  margin-top: 12px;
+  padding-top: 6px;
+  border-top: 1px solid silver;
+}
+[data-params*="rent="] .art__cost:before {
+  content: "Цена за 1 бой: ";
+  font-weight: bold;
+  color: #82634b;
+}
+
+/* resources */
+
+.res {
+  margin: 0 2px;
+}
+.res:before,
+.res-in-gold:after {
+  content: "";
+  width: 22px;
+  height: 22px;
+  margin-right: 2px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url("https://dcdn2.heroeswm.ru/i/r/48/gold.png?v=3.23de65") center;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+.res--wood:before {background-image: url("https://dcdn2.heroeswm.ru/i/r/48/wood.png?v=3.23de65");}
+.res--ore:before {background-image: url("https://dcdn2.heroeswm.ru/i/r/48/ore.png?v=3.23de65");}
+.res--mercury:before {background-image: url("https://dcdn2.heroeswm.ru/i/r/48/mercury.png?v=3.23de65");}
+.res--sulfur:before {background-image: url("https://dcdn2.heroeswm.ru/i/r/48/sulfur.png?v=3.23de65");}
+.res--crystals:before {background-image: url("https://dcdn2.heroeswm.ru/i/r/48/crystals.png?v=3.23de65");}
+.res--gems:before {background-image: url("https://dcdn2.heroeswm.ru/i/r/48/gems.png?v=3.23de65");}
+.res--diamonds:before {background-image: url("https://dcdn2.heroeswm.ru/i/r/48/diamonds.png?v=3.23de65");}
+
+.res-in-gold {
+  float: left;
+  display: none;
+}
+.res-in-gold:before {
+  content: "Всего: ";
+}
+.res-in-gold:after {
+  margin-right: 0;
+  margin-left: 2px;
+}
+.art__cost:hover > .res-in-gold {
+  display: block;
+}
+
+
+.art__level {
+  float: right;
+  width: 30px;
+  height: 30px;
+  line-height: 28px;
+  margin-right: 6px;
+  font-weight: bold;
+  text-align: center;
+  color: #1d793d;
+  background-color: #dcf1e3;
+  border: 2px dotted #888;
+  border-radius: 50%;
+}
+.art--unavailable .art__level {
+  background-color: #f3dede;
+}
+.art--unavailable .a-lvl > span {
+  color: #d00;
+}
+
+
+[data-process] .a-link {
+  color: inherit !important;
+  pointer-events: none;
+  user-select: none;
+}
+[data-process] .a-link.art__btn {
+  background-color: #ddd !important;
+  border-color: #aaa #bbb #bbb #aaa !important;
+  box-shadow: none;
+  filter: grayscale(.7);
+}
+[data-process] .rent__select {
+  color: #999;
+  background-color: #ddd;
+  border-color: #aaa;
+  pointer-events: none;
+}
+
+
+@media screen and (max-width: 800px) {
+  .shop__main {
+    margin-right: 0;
+  }
+  .shop__nav-wrap {
+    width: auto;
+    position: static;
+    overflow: hidden;
+  }
+  .shop__nav-box {
+    position: static;
+    border-width: 0 0 1px;
+    box-shadow: none;
+  }
+  .shop__nav-box > .shop__tab,
+  #nav-flag {
+    display: none;
+  }
+  .shop__nav > a {
+    width: 50%;
+    float: left;
+  }
+  .shop__nav > a:nth-child(2) {
+    border-top: none;
+  }
+  .shop__nav > a:nth-child(odd) {
+    border-right: 1px solid silver;
+  }
+  .shop__nav > a:nth-child(odd):last-of-type {
+    width: 100%;
+    border-right: none;
+    text-align: center;
+  }
+  .res-in-gold {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 600px) {
+  .art__block {
+    float: none;
+  }
+  .art__block--right {
+    width: auto;
+    position: absolute;
+    top: 8px; right: 0;
+  }
+  .art__block--right:before {
+    content: "Требуемый уровень:";
+    line-height: 30px;
+    margin-right: 8px;
+    color: #9c5959;
+  }
+  .art__block--center {
+    width: auto;
+    padding: 8px 8px 0;
+  }
+}
+@media screen and (max-width: 450px) {
+  .art__rent {
+    line-height: normal;
+  }
+  .art__rent > .art__btn {
+    display: block;
+    float: none;
+    max-width: 180px;
+    margin-top: 3px;
+  }
+}
