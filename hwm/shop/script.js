@@ -1,33 +1,70 @@
-(function(currentScript) {
-  "use strict";
+(function(script) {
+  'use strict';
   var $ = (function() {function fn(s) {return document.querySelector(s);}function extend(target, source) {for (var key in source) {target[key] = source[key];} return target;}return extend(fn, {toArray: function(a) {var res = [], i = 0; for (; i < a.length; res.push(a[i++])); return res;},parseNode: function(html, callback) {var div = document.createElement('div'); div.innerHTML = html; div = div.firstChild.cloneNode(!0); callback && callback(div); return div;},index: function(e) {return fn.toArray(e.parentNode.children).indexOf(e);},rnd: function(n) {return Math.random() * n >> 0;},extend: extend});})();
 
-  !Element.prototype.closest && (Element.prototype.closest = function(s) {
-    var that = this, slice = $.toArray, test, parent;
-    function checkParent(e) {return e.parentNode === parent;}
-    while ((parent = that.parentNode)) {
-      test = slice(parent.querySelectorAll(s)).filter(checkParent).indexOf(that) >= 0;
-      if (test) return that;
-      that = parent;
-    } return null;
-  });
+  var shopRedesign = function() {
+    var locked;
+    var shopContainer = $.parseNode('<div class="shopContainer"></div>', function(elem) {
+      document.body.appendChild(elem);
+    });
 
-  var shopRedisign = function() {
-    var isOverflow = !!$('td > b > font[color="red"]');
+    var mobile = (function(test) {
+      if (!test) return !1;
 
-    var heroLevel = 15||localStorage.heroLevel >> 0 || (function() {
-      var level = +prompt('Введите свой БУ') >> 0 || 1;
-      localStorage.heroLevel = level;
-      return level;
-    })();
+      var w = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
+      var el = document.body.firstElementChild;
+
+      function removeStyle(e) {
+        return e && e.removeAttribute('style');
+      }
+
+      document.body.setAttribute('data-mobile', '');
+      w.onresize = w.onorientationchange = null;
+      removeStyle(document.body);
+
+      while (el) {
+        if (el.id === 'android_main') {
+          [el, el.firstElementChild].forEach(removeStyle);
+          break;
+        }
+        $.toArray(el.getElementsByTagName('*')).concat(el).forEach(removeStyle);
+        el = el.nextElementSibling;
+      }
+
+      return !0;
+    })(document.getElementById('link_home'));
+
+    var resources = (function(target, that) {
+      if (!target) return null;
+
+      var keys = 'gold|wood|ore|mercury|sulfur|crystals|gems|diamonds'.split('|');
+      var res = $.toArray(target.querySelectorAll('span, td:nth-child(2n), .panel_res'));
+      var values = res.map(function(el) {
+        return +el.textContent.replace(/,/g, '');
+      });
+
+      keys.forEach(function(key, ind) {
+        var elem = res[ind];
+
+        that[key] = {
+          key: key,
+          value: values[ind],
+          decrement: function(n) {
+            elem.textContent = shopSet.toLocaleString(this.value -= n);
+          }
+        };
+      });
+
+      return that;
+    })($('#ResourcesPanel, #top_res_table, #panel_resourses'), {});
+
+    var heroLevel = ($('.wb font[color="red"] > b') || $.parseNode('<div>23</div>')).textContent - 1;
 
     var shopData = (function(l) {
       var search = l.search;
-      var category = search.match(/cat=(\w+)/);
       return {
-        pathname: l.pathname.slice(1, -4),
-        category: (category && category[1]) || 'weapon',
-        rent: (l.search.split('rent=')[1] || '0')[0],
+        cat: (search.match(/cat=(\w+)/) || [, 'weapon'])[1],
+        rent: (search.match(/rent=(\d)/) || '')[1] >> 0,
         toString: function() {
           return search;
         }
@@ -37,49 +74,52 @@
     var frame = (function(elem) {
       document.body.appendChild(elem);
 
-      var w = elem.contentWindow, test, purchase;
+      var name = elem.name || 'shopFrame';
+      var w = elem.contentWindow;
+      var references = [], purchaseData;
       var that = {
-        name: elem.name || 'shopFrame',
-        target: elem,
-        frameWindow: w,
-        elements: [],
         onload: function() {
-          if (!(test && purchase)) return;
-
-          var body = w.document && w.document.body;
-
-          if (that.overflow()) return purchase[0].parentNode.removeChild(purchase[0]);
-          if (!(body && body.querySelector('td.wbwhite[align="center"][style] b'))) return;
-
-          test = 0;
-          purchase[0].className = 'art__purchase art__purchase--success';
-          purchase[0].firstElementChild.textContent = ++purchase[1];
-          newShop.table.removeAttribute('data-process');
+          if (!(locked && purchaseData)) return;
+          that.purchaseSuccess(purchaseData);
         },
-        purchase: function(o, callback) {
-          if (test) return;
-
-          test = 1;
-          purchase = o.purchase;
-          purchase[0].className = 'art__purchase';
-          callback && callback(o);
-          newShop.table.setAttribute('data-process', '');
+        purchaseProcess: function(data) {
+          locked = 1;
+          purchaseData = data;
+          newShop.setState('locked');
+          data.purchase.target.className += ' art__purchase--loading';
+          data.artInfo.submitForm && data.artInfo.submitForm();
         },
-        overflow: function() {
-          var body = w.document && w.document.body;
+        purchaseSuccess: function(data) {
+          locked = 0;
+          newShop.setState('');
+          data.purchase.target.className = 'art__purchase';
+          data.purchase.increment();
+          data.callback && data.callback(w.document.body);
+          data.resources.forEach(function(res) {
+            resources[res.key].decrement(res.value);
+          });
+        },
+        overflow: function(data) {
+          var body = w.document.body;
 
-          if (body && body.querySelector('td > b > font[color="red"]')) return alert('Инвентарь переполнен!'), !0;
-
-          return !1;
+          if (shopData.cat === 'other' || (data && /el_bottle|ng_el_b/.test(data.id))) return;
+          if (body && body.querySelector('td > b > font[color="red"]')) {
+            newShop.setState('locked');
+            shopAlert.setContent('<a href="/inventory.php" class="td-u">Инвентарь</a> переполнен!').show();
+            return (locked = 1);
+          }
         },
         fix: function(newName) {
-          var oldName = this.name;
+          var oldName = name;
 
-          w.name = this.name = elem.name = newName;
+          w.name = elem.name = name = newName;
 
-          this.elements.forEach(function(e) {
+          references.forEach(function(e) {
             return e.target = newName;
           });
+        },
+        add: function(e) {
+          references.push(e);
         }
       };
 
@@ -87,6 +127,38 @@
 
       return that;
     })($.parseNode('<iframe src="' + location.href + '" class="shopFrame" name="shopFrame"></iframe>'));
+
+    var shopAlert = (function(elem) {
+      var box = elem.querySelector('.shopAlert__content');
+      var btn = box.nextElementSibling;
+      var that = {
+        target: elem,
+        show: function() {
+          elem.className += ' shopAlert--shown';
+          return this;
+        },
+        hide: function() {
+          elem.className = 'shopAlert';
+          return this;
+        },
+        setContent: function(html) {
+          box.innerHTML = html;
+          return this;
+        }
+      };
+
+      elem.addEventListener('click', function(e) {
+        var trg = e.target;
+
+        if (trg === elem || trg.closest('.shopAlert__btn')) that.hide();
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.keyCode === 27) that.hide();
+      });
+
+      return that;
+    })($.parseNode('<div class="shopAlert"><div class="shopAlert__inner"><div class="shopAlert__content"></div><div class="shopAlert__btn">OK</div></div></div>'));
 
     var otherData = (function(cat) {
       if (cat !== 'other') return {};
@@ -136,7 +208,9 @@
           descr: 'Полностью отменяет ожидание после поражения вору, а так же увеличивает получаемые очки гильдии в два раза. Зелье работает при условии, что текущий уровень гильдии меньше среднего для текущего боевого уровня.<br>Эффект длится <span>7</span> дней.'
         }
       };
-    })(shopData.category);
+    })(shopData.cat);
+
+    var isOverflow = shopData.cat !== 'other' && $('td > b > font[color="red"]');
 
     var shopSet = {
       propsMap: {
@@ -146,11 +220,9 @@
         'очки амуниции': 'OA',
         'доступно для продажи': 'availableForSail'
       },
-      auc: (function(cat) {
-        return function(id) {
-          return 'auction.php?cat=' + cat + '&sort=4&art_type=' + id;
-        };
-      })(shopData.category),
+      auc: function(id) {
+        return 'auction.php?cat=' + shopData.cat + '&sort=4&art_type=' + id;
+      },
       createLink: (function(cat) {
         return cat !== 'other' ? (function(el, id) {
           var text = el.textContent.trim();
@@ -165,7 +237,7 @@
             if (el.id) link.id = el.id;
             if (isBuy) {
               link.target = frame.name;
-              frame.elements.push(link);
+              frame.add(link);
             }
 
             link.setAttribute('href', (!/аренда|продажа/i.test(text) ? href : href + '#art-' + id));
@@ -186,14 +258,14 @@
 
             link.target = frame.name;
             link.setAttribute('href', href || '#');
-            frame.elements.push(link);
+            frame.add(link);
           }
 
           link.innerHTML = !el.querySelector('img') ? text : text + ' <span class="res res--diamonds"></span>';
 
           return link;
         });
-      })(shopData.category),
+      })(shopData.cat),
       getMods: function(node, reg) {
         if (node.nextElementSibling.tagName !== 'TABLE') return null;
 
@@ -238,7 +310,7 @@
           })
         };
 
-        if (shopData.rent === '2') {
+        if (shopData.rent === 2) {
           that.name = that.name.match(/[^\[]+/)[0].trim();
 
           that.craftData = $.toArray(imgParent.children).slice(2).map(function(img) {
@@ -250,7 +322,7 @@
           return this.getProps(that, prop, ind, lastProp);
         }, this);
 
-        if (otherData[id]) $.extend(that, otherData[id]);
+        otherData[id] && $.extend(that, otherData[id]);
 
         return that;
       },
@@ -279,7 +351,7 @@
               box.appendChild(a);
             });
 
-            !/gift|other/.test(shopData.category) && box.appendChild($.parseNode('<a href="' + shopSet.auc(data.id) + '">Рынок</a>'));
+            !/gift|other/.test(shopData.cat) && box.appendChild($.parseNode('<a href="' + shopSet.auc(data.id) + '">Рынок</a>'));
           }));
 
           block.appendChild($.parseNode('<div class="art__properties"></div>', function(elem) {
@@ -326,9 +398,9 @@
         art.appendChild(left);
         art.appendChild(center);
         art.appendChild(right);
+
         that.callback && that.callback(art, data);
 
-        this.artsBox.appendChild(art);
         this.arts.push(art);
       },
       buyBox: (function(cat) {
@@ -350,24 +422,22 @@
           var elem = that.elem;
 
           if (elem.tagName === 'TABLE') return $.toArray(elem.querySelectorAll('button')).map(this.createLink);
-          else if (elem.tagName === 'FONT' && otherData[that.id]) otherData[that.id].boosterAlert = $.parseNode('<div class="boosterAlert">' + elem.innerHTML + '</div>');
+          if (elem.tagName === 'FONT' && otherData[that.id]) otherData[that.id].boosterAlert = $.parseNode('<div class="boosterAlert">' + elem.innerHTML + '</div>');
 
           elem = elem.parentNode.querySelector('button:last-of-type');
 
-          if (elem) return [this.createLink(elem)];
-
-          return [];
+          return elem ? [this.createLink(elem)] : [];
         });
-      })(shopData.category),
+      })(shopData.cat),
       getProps: function(that, prop, ind, last) {
-        if (!ind && +shopData.rent && prop.tagName === 'TABLE') {
+        if (!ind && shopData.rent && prop.tagName === 'TABLE') {
           var img = prop.querySelector('img');
           var formCont = document.getElementById(that.id);
 
           if (img) that.cost = {gold: img.parentNode.nextElementSibling.textContent.trim()};
-          if (formCont) {
+          if (formCont && !isOverflow) {
             formCont.querySelector('a').click();
-            that.form = formCont.firstElementChild;
+            that.form = formCont.firstElementChild || document.forms['f' + that.id];
           }
 
           return;
@@ -377,7 +447,7 @@
 
         switch (text) {
           case 'стоимость':
-            !that.cost && (that.cost = this.getMods(prop, /\/48\/(\w+)/));
+            !that.cost && (that.cost = this.getMods(prop, /\/(\w+)\.png/));
             break;
           case 'требуемый уровень':
           case 'прочность':
@@ -389,9 +459,11 @@
             })(prop.nextSibling);
             break;
           case 'описание':
-            if (shopData.category === 'other') break;
+            if (shopData.cat === 'other') break;
             that.descr = (function(node, descr) {
-              while ((node = node.nextSibling).nodeType === 3) descr += node.nodeValue.trim();
+              while (node = node.nextSibling) {
+                if (node.nodeType === 3) descr += node.nodeValue.trim();
+              }
               return descr;
             })(prop.nextSibling, '');
             break;
@@ -399,7 +471,7 @@
             that.primaryMods = this.getMods(prop, /attr_(\w+)/);
             that.secondaryMods = (function(node, list) {
               var tag;
-              while ((node = node.nextElementSibling)) {
+              while (node = node.nextElementSibling) {
                 if ((tag = node.tagName) === 'FONT' || node === last) return list.length && list;
                 if (tag === 'I') list.push.apply(list, node.innerText.trim().split('\n'));
               }
@@ -432,10 +504,10 @@
               }
             },
           });
-        })(+shopData.rent);
+        })(shopData.rent);
 
         var callback = (function() {
-          return shopData.category === 'other' ? (function(art, data) {
+          return shopData.cat === 'other' ? (function(art, data) {
             var center = art.children[1];
 
             if (data.boosterAlert) {
@@ -446,19 +518,16 @@
               var propsElem = center.querySelector('.art__properties');
               propsElem && data.propsExtend(propsElem);
             }
-          }) : formApp ? (function(art, data) {
+          }) : formApp && (function(art, data) {
             var center = art.children[1];
 
             data.form && center.insertBefore($.parseNode('<div class="art__rent"><span class="art__prop">Аренда на (кол-во боев):</span></div>', function(rent) {
               var form = data.form;
 
-              form.target = frame.name;
-              frame.elements.push(form);
-
               var btn = $.parseNode('<button class="a-link art__btn">Аренда: <span class="res res--gold">' + data.cost.gold + '</span></button>', function(btn) {
                 var submit = form.querySelector('[type="submit"]');
 
-                btn.onclick = function() {
+                data.submitForm = function() {
                   submit.click();
                 };
               });
@@ -473,8 +542,10 @@
 
               rent.appendChild(select);
               rent.appendChild(btn);
+              form.target = frame.name;
+              frame.add(form);
             }), center.children[3]);
-          }) : null;
+          });
         })();
 
         return function(data) {
@@ -502,7 +573,7 @@
 
       var tabsData = {
         index: $.index(tbody.querySelector('.wbwhite')) % 3,
-        data: $.toArray(tbody.firstElementChild.children).slice(0, -1).map(function(e) {
+        data: $.toArray(tbody.firstElementChild.children).slice(0, 3).map(function(e) {
           e = e.firstElementChild;
           return [e.getAttribute('href'), e.textContent];
         })
@@ -510,13 +581,14 @@
 
       var navData = (function(that) {
         that.data = $.toArray(tbody.children[1].children[1].querySelectorAll('a, b')).map(function(x, i) {
-          var href = x.getAttribute('href');
-          var text = x.textContent;
+          var href = x.getAttribute('href'), text = x.textContent;
+
           if (!href) {
             href = '#';
             that.index = i;
             that.section = (text = text.slice(3));
           }
+
           return [href, text];
         });
 
@@ -533,6 +605,9 @@
         return shopSet.artInfo(art);
       });
 
+      table.className += ' oldShop';
+      shopContainer.appendChild(table);
+
       return {
         table: table,
         tabsData: tabsData,
@@ -541,32 +616,37 @@
           return artsData;
         }
       };
-    })($('table.wb[width="95%"]'));
+    })($('table.wb[cellpadding="10"]'));
 
-    var newShop = shopSet.newShop = (function(table) {
-      var main = table.firstElementChild;
+    var newShop = shopSet.newShop = (function(target) {
+      var main = target.firstElementChild;
 
       (function(tabs, elem) {
-        tabs.data.forEach(function(data) {
-          elem.innerHTML += '<a href="' + data[0] + '" class="shop__tab">' + data[1] + '</a>';
+        var test = /gift|other/.test(shopData.cat);
+
+        tabs.data.forEach(function(data, i) {
+          var href = !(i && test) ? data[0] : data[0].replace(/cat=\w+/, 'cat=weapon');
+          var tab = $.parseNode('<a href="' + href + '" class="shop__tab">' + data[1] + '</a>');
+
+          elem.appendChild(tab);
         });
-        elem.children[tabs.index].className += ' selected';
       })(oldShop.tabsData, main.firstElementChild);
 
       var navContainer = $.parseNode('<div class="shop__nav-wrap"><div class="shop__nav-box"><div class="shop__tab">Разделы</div><div class="shop__nav"></div></div></div>', function(elem) {
         var nav = elem.querySelector('.shop__nav');
-        var navData = oldShop.navData;
-        var navKeys = navData.data.map(function(data) {
+        var navData = oldShop.navData.data;
+        var navKeys = navData.map(function(data) {
           var key = data[0];
-          return key === '#' ? shopData.category : key.match(/cat=(\w+)/)[1];
+          return key === '#' ? shopData.cat : key.match(/cat=(\w+)/)[1];
         });
 
-        navData.data.forEach(function(data, i) {
+        navData.forEach(function(data, i) {
           var a = $.parseNode('<a href="' + data[0] + '" id="s-' + navKeys[i] + '">' + data[1] + '</a>');
           nav.appendChild(a);
         });
 
         nav.appendChild($.parseNode('<span id="nav-flag"></span>'));
+        elem.appendChild($.parseNode('<div id="toTop"><a href="#top" tabindex="-1"></a></div>'));
       });
 
       var filter = (function(elem) {
@@ -581,11 +661,11 @@
 
           timer = setTimeout(function() {
             arts.forEach(function(art) {
-              if (!val) return ++counter, art.removeAttribute('hidden');
+              if (!val) return ++counter && art.removeAttribute('hidden');
 
               var text = art.textContent.toLowerCase();
 
-              if (text.indexOf(val) >= 0) ++counter, art.removeAttribute('hidden');
+              if (text.indexOf(val) >= 0) ++counter && art.removeAttribute('hidden');
               else art.setAttribute('hidden', '');
             });
 
@@ -596,53 +676,52 @@
         return elem;
       })($.parseNode('<div class="shop__filter"><span></span><input type="text" id="shop__filter" placeholder="Фильтр..."></div>'));
 
-      var artsBox = shopSet.artsBox = $.parseNode('<div class="shop__arts-box"></div>');
+      var artsBox = $.parseNode('<div class="shop__arts-box"></div>');
       var arts = shopSet.arts = [];
-
       var artsData = oldShop.getArtsData();
-
-      if (!artsData) return;
 
       console.log(artsData);
 
       artsData.forEach(shopSet.artsDataEach(shopSet));
+      arts.forEach(function(art) {
+        artsBox.appendChild(art);
+      });
 
       main.appendChild(navContainer);
       main.appendChild(filter);
       main.appendChild(artsBox);
 
       return {
-        table: table,
-        nav: navContainer,
-        filter: filter,
+        target: target,
         arts: arts,
         draw: function() {
-          table.setAttribute('data-params', shopData.toString());
-          document.body.appendChild(table);
+          target.setAttribute('data-params', shopData.toString());
+          shopContainer.appendChild(target);
+          setTimeout(function() {
+            shopContainer.className += ' shop--loaded';
+          }, 20);
+        },
+        setState: function(value) {
+          target.setAttribute('data-state', value);
         }
       };
-    })($.parseNode('<div class="shop-table"><div class="shop__main"><div class="shop__tabs"></div></div></div>'));
+    })($.parseNode('<div class="newShop"><div class="shop__main"><div class="shop__tabs"></div></div></div>'));
 
-    newShop && newShop.draw();
+    newShop.draw();
+    newShop.target.appendChild(shopAlert.target);
 
-    (!(+shopData.rent) && !/gift|other/.test(shopData.category)) && document.addEventListener('mouseover', function(e) {
+    !shopData.rent && !/gift|other/.test(shopData.cat) && document.addEventListener('mouseover', function(e) {
       /* Функция подсчитывает общую цену арта (золото + ресурсы)
       и добавляет новый элемент в строку стоимости (.art__cost).
       Отображение регулируется через CSS. */
 
-      var trg = e.target, test = /art__cost/.test(trg.className), total = 0;
-      
+      var trg = e.target;
+      var test = !trg._resInGold && trg.childElementCount > 1 && /art__cost/.test(trg.className);
+      var total = 0;
+
       if (!test) return;
-      
-      test = trg.querySelector('.res-in-gold');
 
-      if (test) return;
-
-      var nodes = $.toArray(trg.children);
-
-      if (nodes.length === 1) return;
-
-      nodes.forEach(function(node) {
+      $.toArray(trg.children).forEach(function(node) {
         var text = node.textContent;
 
         if (/gold/.test(node.className)) total += +text.replace(/,/g, '');
@@ -650,42 +729,115 @@
         else total += text * 360;
       });
 
+      trg._resInGold = 1;
       trg.innerHTML += '<span class="res-in-gold">' + shopSet.toLocaleString(total); + '</span>';
     });
 
     document.addEventListener('click', function(e) {
-      var trg = e.target, purchase;
+      var trg = e.target;
 
       if (trg === trg.closest('.a-link')) {
-        purchase = trg.art_purchase;
-
-        if (frame.overflow()) return purchase && purchase[0].parentNode.removeChild(purchase[0]);
-
-        if (!purchase) {
-          purchase = trg.art_purchase = [$.parseNode('<div class="art__purchase"><span class="a-purchase">0</span></div>'), 0];
-          trg.parentNode.parentNode.insertBefore(purchase[0], trg.parentNode.nextElementSibling);
+        if (locked || trg.getAttribute('href') === '#') {
+          e.preventDefault();
+          return !1;
         }
 
-        frame.purchase({
+        var art = trg.closest('[id^="art-"]');
+        var artInfo = oldShop.getArtsData()[newShop.arts.indexOf(art)];
+
+        if (frame.overflow(artInfo)) {
+          e.preventDefault();
+          return !1;
+        }
+
+        var diamonds = trg.querySelector('.res--diamonds');
+
+        var res = (function(cost) {
+          if (diamonds) {
+            var value = +trg.textContent.match(/\d+/)[0];
+            var test = resources.diamonds.value - value >= 0;
+            return [test && {key: 'diamonds', value: value}];
+          }
+          return Object.keys(cost).map(function(k) {
+            var r = resources[k].value;
+            var v = +cost[k].replace(/,/, '');
+            var test = r - v >= 0;
+
+            return test && {key: k, value: v};
+          });
+        })(artInfo.cost);
+
+        if (!res.every(Boolean)) {
+          e.preventDefault();
+          trg.setAttribute('tabindex', '-1');
+          trg.setAttribute('disabled', '');
+          trg.setAttribute('href', '#');
+
+          if (diamonds) shopAlert.setContent('Недостаточно <a href="/hwm_donate_page_new.php" class="td-u">бриллиантов!</a> <span class="res res--diamonds"></span>').show();
+          else shopAlert.setContent('Недостаточно ресурсов!').show();
+
+          return !1;
+        }
+
+        var callback;
+
+        if (shopData.rent) res[0].value *= trg.previousElementSibling.value;
+        else if (shopData.cat === 'other' && /booster/.test(artInfo.id)) {
+          callback = function(d) {
+            var font = d.querySelector('#' + artInfo.id + ' ~ font');
+
+            if (font) {
+              if (artInfo.boosterAlert) artInfo.boosterAlert.innerHTML = font.innerHTML;
+              else art.querySelector('.art__descr').appendChild($.parseNode('<div class="boosterAlert">' + font.innerHTML + '</div>'));
+            }
+
+            trg.setAttribute('tabindex', '-1');
+            trg.setAttribute('disabled', '');
+            trg.setAttribute('href', '#');
+          };
+        }
+
+        var purchase = artInfo.purchase || (function(target, counter) {
+          trg.parentNode.parentNode.insertBefore(target, trg.parentNode.nextElementSibling);
+
+          return (artInfo.purchase = {
+            target: target,
+            output: target.firstElementChild,
+            increment: function() {
+              this.output.textContent = ++counter;
+            }
+          });
+        })($.parseNode('<div class="art__purchase"><span class="a-purchase">0</span></div>'), 0);
+
+        frame.purchaseProcess({
           target: trg,
-          purchase: purchase
+          purchase: purchase,
+          artInfo: artInfo,
+          resources: res,
+          callback: callback
         });
       }
     });
 
-    isOverflow && frame.overflow();
-
     frame.fix('newShopFrame');
 
-    location.hash.slice(5) && shopSet.arts.forEach(function(art) {
-      if (art.id !== location.hash) return;
+    var hash = location.hash.slice(1);
+
+    hash.slice(4) && shopSet.arts.forEach(function(art) {
+      if (art.id !== hash) return;
 
       art.className += ' art--target';
       window.scrollTo(0, art.offsetTop);
     });
 
-    currentScript && (currentScript.id = '');
+    if (isOverflow) {
+      newShop.setState('locked');
+      setTimeout(function() {
+        shopAlert.setContent('<a href="/inventory.php" class="td-u">Инвентарь</a> переполнен!').show();
+      }, 500);
+    }
   };
 
-  document.readyState === 'complete' ? shopRedisign() : window.addEventListener('load', shopRedisign);
-})(document.getElementById('_shopRedisign'));
+  document.readyState === 'complete' ? shopRedesign() : window.addEventListener('load', shopRedesign);
+  script && (script.id = '');
+})(document.currentScript || document.getElementById('_shopRedesign'));
