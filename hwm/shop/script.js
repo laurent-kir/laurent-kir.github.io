@@ -2,7 +2,7 @@
   'use strict';
   var $ = (function() {function fn(s) {return document.querySelector(s);}function extend(target, source) {for (var key in source) {target[key] = source[key];} return target;}return extend(fn, {toArray: function(a) {var res = [], i = 0; for (; i < a.length; res.push(a[i++])); return res;},parseNode: function(html, callback) {var div = document.createElement('div'); div.innerHTML = html; div = div.firstChild.cloneNode(!0); callback && callback(div); return div;},index: function(e) {return fn.toArray(e.parentNode.children).indexOf(e);},rnd: function(n) {return Math.random() * n >> 0;},extend: extend});})();
 
-  var shopRedesign = function() {
+  function shopRedesign() {
     var locked;
     var shopContainer = $.parseNode('<div class="shopContainer"></div>', function(elem) {
       document.body.appendChild(elem);
@@ -836,8 +836,9 @@
         shopAlert.setContent('<a href="/inventory.php" class="td-u">Инвентарь</a> переполнен!').show();
       }, 500);
     }
-  };
+
+    script && (script.id = '');
+  }
 
   document.readyState === 'complete' ? shopRedesign() : window.addEventListener('load', shopRedesign);
-  script && (script.id = '');
 })(document.currentScript || document.getElementById('_shopRedesign'));
