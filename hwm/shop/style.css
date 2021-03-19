@@ -806,8 +806,9 @@
   max-width: 40em;
   margin: auto;
   padding: 1em;
-  background-color: #dcdcdc;
-  border: 2px solid gray;
+  color: #eee;
+  background-color: #444444;
+  border: 1px solid #888;
   border-top: none;
   box-shadow: 0 0 6px #666;
   overflow: hidden;
@@ -823,8 +824,12 @@
   padding: 1em;
   margin-bottom: 1em;
   text-align: center;
-  background-color: #ccc;
-  border: 1px dashed #aaa;
+  background-color: #555;
+  border: 1px dashed #888;
+}
+.shopAlert__content > a:hover,
+.shopAlert__content > a:focus {
+  color: #a4d4e7;
 }
 .shopAlert__btn {
   float: right;
@@ -832,8 +837,8 @@
   text-align: center;
   color: #eee;
   background-color: #8a766f;
-  border: 2px solid #666;
-  outline: 1px solid #ddd;
+  border: 1px solid #bbb;
+  outline: 1px solid #444;
   outline-offset: -3px;
   cursor: pointer;
 }
