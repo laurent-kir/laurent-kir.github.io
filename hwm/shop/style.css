@@ -27,6 +27,7 @@
 }
 
 .shopContainer {
+  min-width: 320px;
   min-height: 100vh;
   position: relative;
   margin-top: .5em;
@@ -861,6 +862,7 @@
   .shop__nav-wrap {
     width: auto;
     position: static;
+    padding-left: 0;
     overflow: hidden;
   }
   .shop__nav-box {
