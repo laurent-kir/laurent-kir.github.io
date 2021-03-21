@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HWM: Shop Redesign</title>
+  <link rel="stylesheet" href="preview.css">
+</head>
+<body>
+  <div class="header">
+    <a class="header__logo" href="https://heroeswm.ru" target="_blank"></a>
+    <div class="header__content">
+      <span class="header__name">Редизайн магазина</span> для <a class="hwm" href="https://heroeswm.ru" title="Герои войны и денег" target="_blank">гвд</a>
+      <div class="header__author">Автор: <a href="https://www.heroeswm.ru/pl_info.php?id=5781303" target="_blank">Мифист</a></div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="frameBox">
+      <div class="frameBox__title">before</div>
+      <iframe src="old.html" class="frame"></iframe>
+    </div>
+    <div class="frameBox">
+      <div class="frameBox__title">after</div>
+      <iframe src="new.html" class="frame"></iframe>
+    </div>
+    <div class="range">
+      <div class="range__thumb"></div>
+    </div>
+  </div>
+  <script>
+    (function(elem) {
+      var frameLeft = elem.parentNode.children[0];
+      var frameRight = elem.parentNode.children[1];
+      var width = elem.offsetWidth, max = window.innerWidth, test;
+      function resize(n) {
+        elem.style.left = frameLeft.style.width = n + 'px';
+        frameRight.style.width = max - n + 'px';
+      }
+      elem.addEventListener('mousedown', function(e) {
+        test = 1;
+        resize(e.clientX);
+      });
+      document.addEventListener('mouseup', function(e) {
+        test = 0;
+      });
+      document.addEventListener('mousemove', function(e) {
+        var cx = test && e.clientX;
+        return (!test || cx > max) ? 0 : resize(cx);
+      });
+      window.addEventListener('resize', function(e) {
+        max = this.innerWidth;
+        var left = parseInt(elem.style.left) >> 0;
+        if (left && left === parseInt(frameRight.style.width) >> 0) return (elem.style.left = frameLeft.style.width = frameRight.style.width = (max / 2 >> 0) + 'px');
+        if (left > max) left = max;
+        resize(left || max / 2);
+      });
+    })(document.querySelector('.range'));
+  </script>
+</body>
+</html>
