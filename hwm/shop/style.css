@@ -12,7 +12,9 @@
   100% {-webkit-transform: rotate(360deg); transform: rotate(360deg);}
 }
 
-
+html, body {
+  scroll-behavior: smooth;
+}
 [hidden] {
   display: none !important;
 }
