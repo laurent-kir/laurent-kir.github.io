@@ -646,7 +646,12 @@
         });
 
         nav.appendChild($.parseNode('<span id="nav-flag"></span>'));
-        elem.appendChild($.parseNode('<div id="toTop"><a href="#top" tabindex="-1"></a></div>'));
+        elem.appendChild($.parseNode('<div id="toTop"><a href="#" tabindex="-1"></a></div>', function(el) {
+          el.firstElementChild.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scroll({top: 0, behavior: 'smooth'});
+          });
+        }));
       });
 
       var filter = (function(elem) {
