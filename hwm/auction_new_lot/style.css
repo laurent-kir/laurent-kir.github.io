@@ -153,34 +153,6 @@
 .block[data-shown="1"] > .block__title:after {
   content: "-";
 }
-.parts-alert {
-  display: none;
-  position: relative;
-  padding: 0 .4em;
-  text-transform: none;
-  cursor: help;
-}
-.block--parts:hover .parts-alert,
-.block--parts[data-shown="1"] .parts-alert {
-  display: inline;
-}
-.parts-alert:after {
-  content: "Вы продаете 20 частей, но покупатель получит только одну; 19 частей списывается как комиссия.";
-  width: 18em;
-  line-height: normal;
-  display: none;
-  position: fixed;
-  font-size: .9em;
-  padding: .2em .4em;
-  margin-left: 2em;
-  color: gray;
-  background-color: #fff;
-  outline: 2px solid #aaa;
-  pointer-events: none;
-}
-.parts-alert:hover:after {
-  display: inline;
-}
 
 /* select */
 
@@ -203,10 +175,10 @@
   background-color: #ccc;
 }
 .select::-webkit-scrollbar-thumb:hover {
-  background-color: #bbb;
+  background-color: #aaa;
 }
 .select::-webkit-scrollbar-thumb:active {
-  background-color: #aaa;
+  background-color: #888;
 }
 
 /* options */
@@ -434,6 +406,35 @@
   position: absolute;
   top: 2px; right: 2px; bottom: 2px; left: 2px;
   border: 1px dashed #999;
+}
+
+.parts-alert {
+  display: none;
+  position: absolute;
+  padding: 0 .5em;
+  cursor: help;
+  top: 1em; left: 0;
+}
+[data-category="parts"] .parts-alert {
+  display: inline;
+}
+.parts-alert:after {
+  content: "Вы продаете 20 частей, но покупатель получит только одну; 19 частей списывается как комиссия.";
+  width: 18em;
+  display: none;
+  position: absolute;
+  left: 100%; bottom: -.8em;
+  font-size: .9em;
+  padding: .2em .4em;
+  margin-left: 1em;
+  color: gray;
+  background-color: #fff;
+  outline: 2px solid #aaa;
+  box-shadow: 0 0 4px;
+  pointer-events: none;
+}
+.parts-alert:hover:after {
+  display: inline;
 }
 
 /* status */
