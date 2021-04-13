@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 1px;
+      background: #ddd9cd;
+    }
+  </style>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="content">
+    <div class="section" disabled>
+      <div class="section__heading"><a href="#" class="form-lot"></a>Форма продажи</div>
+      <div class="form" data-type="1">
+        <div class="form__row">
+          <div class="form__cell">Наименование:</div>
+           <div class="form__cell"><div class="form__name">Выберите товар</div></div>
+        </div>
+        <div class="form__row">
+          <div class="form__cell">Тип продажи:</div>
+           <div class="form__cell"><button class="form__type">Сразу</button><button class="form__type">Торги</button></div>
+        </div>
+        <div class="form__row">
+          <div class="form__cell">Кол-во:</div>
+           <div class="form__cell"><input class="form__input form__count" type="range" min="0" max="25" value="1"><span></span></div>
+        </div>
+        <div class="form__row">
+          <div class="form__cell">Цена за единицу:</div>
+           <div class="form__cell"><input class="form__input form__price" type="number" min="1" placeholder="Цена за единицу..."><span></span></div>
+        </div>
+        <div class="form__row">
+          <div class="form__cell">Блиц-цена:</div>
+           <div class="form__cell"><input class="form__input form__blizprice" type="number" min="1" placeholder="Блиц-цена..."><span></span></div>
+        </div>
+        <div class="form__row">
+          <div class="form__cell">Продолжительность торгов:</div>
+           <div class="form__cell"><input class="form__input form__duration" type="range" min="1" max="8" value="1"><span></span></div>
+        </div>
+        <div class="form__row">
+          <span class="parts-alert">❗</span>
+          <button class="form__submit">Выставить на рынок</button>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section__heading">Выбор товара</div>
+      <div class="block block--res">
+        <div class="block__title">ресурсы</div>
+        <div class="select select--res" data-max="50">
+          <div class="option" data-id="wood" data-amount="20"><img src="https://dcdn2.heroeswm.ru/i/r/48/wood.png?v=3.23de65">Древесина</div>
+          <div class="option" data-id="ore" data-amount="20"><img src="https://dcdn2.heroeswm.ru/i/r/48/ore.png?v=3.23de65">Руда</div>
+          <div class="option" data-id="mercury" data-amount="10"><img src="https://dcdn2.heroeswm.ru/i/r/48/mercury.png?v=3.23de65">Ртуть</div>
+          <div class="option" data-id="sulphur" data-amount="10"><img src="https://dcdn2.heroeswm.ru/i/r/48/sulfur.png?v=3.23de65">Сера</div>
+          <div class="option" data-id="crystal" data-amount="10"><img src="https://dcdn2.heroeswm.ru/i/r/48/crystals.png?v=3.23de65">Кристаллы</div>
+          <div class="option" data-id="gem" data-amount="10"><img src="https://dcdn2.heroeswm.ru/i/r/48/gems.png?v=3.23de65">Самоцветы</div>
+        </div>
+      </div>
+      <div class="block block--elements">
+        <div class="block__title">элементы гн</div>
+        <div class="select select--elements" data-max="10">
+          <div class="option" data-id="EL_42" data-amount="20"><img src="https://dcdn.heroeswm.ru/i/abrasive.gif">абразив</div>
+          <div class="option" data-id="EL_43" data-amount="20"><img src="https://dcdn.heroeswm.ru/i/snake_poison.gif">змеиный яд</div>
+          <div class="option" data-id="EL_46" data-amount="20"><img src="https://dcdn.heroeswm.ru/i/tiger_tusk.gif">клык тигра</div>
+          <div class="option" data-id="EL_44" data-amount="20"><img src="https://dcdn.heroeswm.ru/i/ice_crystal.gif">ледяной кристалл</div>
+          <div class="option" data-id="EL_45" data-amount="20"><img src="https://dcdn.heroeswm.ru/i/moon_stone.gif">лунный камень</div>
+          <div class="option" data-id="EL_40" data-amount="20"><img src="https://dcdn.heroeswm.ru/i/fire_crystal.gif">огненный кристалл</div>
+          <div class="option" data-id="EL_37" data-amount="20"><img src="https://dcdn.heroeswm.ru/i/meteorit.gif">осколок метеорита</div>
+          <div class="option" data-id="EL_41" data-amount="20"><img src="https://dcdn.heroeswm.ru/i/witch_flower.gif">цветок ведьм</div>
+          <div class="option" data-id="EL_39" data-amount="20"><img src="https://dcdn.heroeswm.ru/i/wind_flower.gif">цветок ветров</div>
+          <div class="option" data-id="EL_78" data-amount="20"><img src="https://dcdn.heroeswm.ru/i/fern_flower.gif">цветок папоротника</div>
+          <div class="option" data-id="EL_38" data-amount="20"><img src="https://dcdn.heroeswm.ru/i/badgrib.gif">ядовитый гриб</div>
+        </div>
+      </div>
+      <div class="block block--arts">
+        <div class="block__title">артефакты</div>
+        <div class="select select--arts" data-max="3">
+          <div class="option" data-id="rarmor1@356793472" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/events/rarmor1.png">Броня разбойника 15/25 [i]</div>
+          <div class="option" data-id="tj_mtuf1@322148943" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/events/tj_mtuf1.png">Великие туфли времён 38/49 [i]</div>
+          <div class="option" data-id="dun_armor1@361865591" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/events/dun_armor1.png">Великий доспех подземелий 64/72 [i]</div>
+          <div class="option" data-id="staff_v1@350169583" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/events/staff_v1.png">Великий посох времён 13/20 [i]</div>
+          <div class="option" data-id="vscroll-1@330187498" data-amount="1"><img src="https://dcdn1.heroeswm.ru/i/artifacts/events/vscroll1_b.png">Великий свиток времён 14/49 [i]</div>
+          <div class="option" data-id="ankh1@366921639" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/events/ankh1.png">Золотой анх 28/39 [i]</div>
+          <div class="option" data-id="p_dag1@335558832" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/events/p_dag1.png">Кинжал пирата-капитана 35/43 [i]</div>
+          <div class="option" data-id="pn_ring1@348629125" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/pirate_event/pn_ring1_b.png">Кольцо пирата-капитана 23/43 [i]</div>
+          <div class="option" data-id="pn_ring1@348634915" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/pirate_event/pn_ring1_b.png">Кольцо пирата-капитана 13/30 [i]</div>
+          <div class="option" data-id="necrohelm2@194558599" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/necrohelm2.png">Корона лича 14/22 [i]</div>
+          <div class="option" data-id="bal_cube@283041146" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/events/bal_cube.png">Куб равноправия 16/27 [i]</div>
+          <div class="option" data-id="rbow1@363558258" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/events/rbow1.png">Лук разбойника 55/70 [i]</div>
+          <div class="option" data-id="scloack8@406362879" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/scloack8.png">Маскировочный плащ 25/30</div>
+          <div class="option" data-id="gm_sword@388402338" data-amount="1"><img src="https://dcdn1.heroeswm.ru/i/artifacts/gm/gm_sword_b.png">Меч великого охотника 8/10</div>
+          <div class="option" data-id="sh_sword@379976133" data-amount="1"><img src="https://dcdn1.heroeswm.ru/i/artifacts/sh/sh_sword_b.png">Меч зверобоя 1/15</div>
+          <div class="option" data-id="sh_sword@395558639" data-amount="1"><img src="https://dcdn1.heroeswm.ru/i/artifacts/sh/sh_sword_b.png">Меч зверобоя 13/15</div>
+          <div class="option" data-id="sarmor9@402210292" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/sarmor9.png">Мифриловая кольчуга 5/40</div>
+          <div class="option" data-id="tj_magam1@337782759" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/events/tj_magam1.png">Мифриловый амулет времён 2/20 [i]</div>
+          <div class="option" data-id="obereg@327124743" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/events/obereg.png">Оберег 7/50</div>
+          <div class="option" data-id="verve_ring@402099945" data-amount="1"><img src="https://dcdn2.heroeswm.ru/i/artifacts/eaglering2_b.png">Перстень вдохновения 4/18</div>
+          <div class="option" data-id="p_pistol1@358512677" data-amount="1"><img src="https://dcdn3.heroeswm.ru/i/artifacts/pirate_event/p_pistol1_b.png">Пистолет пирата-капитана 50/50 [i]</div>
+          <div class="option" data-id="p_pistol1@358519398" data-amount="1"><img src="https://dcdn3.heroeswm.ru/i/artifacts/pirate_event/p_pistol1_b.png">Пистолет пирата-капитана 5/28 [i]</div>
+          <div class="option" data-id="p_cloak1@339205795" data-amount="1"><img src="https://dcdn3.heroeswm.ru/i/artifacts/pirate_event/p_cloak1_b.png">Плащ пирата-капитана 52/61 [i]</div>
+          <div class="option" data-id="rcloak1@371132399" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/events/rcloak1.png">Плащ разбойника 25/26 [i]</div>
+          <div class="option" data-id="sboots9@406349127" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/sboots9.png">Солдатские сапоги  16/30</div>
+          <div class="option" data-id="gm_3arrows@412186243" data-amount="1"><img src="https://dcdn2.heroeswm.ru/i/artifacts/gm/gm_3arrows_b.png">Стрелы великого охотника 10/10</div>
+          <div class="option" data-id="samul8@401814296" data-amount="1"><img src="https://dcdn3.heroeswm.ru/i/artifacts/samul81_b.png">Счастливая подкова 14/30</div>
+          <div class="option" data-id="polkboots1@273249008" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/events/polkboots1.png">Тяжёлые сапоги полководца 9/20 [i]</div>
+          <div class="option" data-id="rhelm1@343797318" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/events/rhelm1.png">Шлем разбойника 29/39 [i]</div>
+          <div class="option" data-id="p_sword1@274284791" data-amount="1"><img src="https://dcdn.heroeswm.ru/i/artifacts/pirate_event/p_sword1_b.png">Шпага пирата-капитана 38/56 [i]</div>
+          <div class="option" data-id="shield_14y@410180212" data-amount="1"><img src="https://dcdn2.heroeswm.ru/i/artifacts/14shield_b.png">Щит наследия 30/30 [i]</div>
+          <div class="option" data-id="shield_14y@410181746" data-amount="1"><img src="https://dcdn2.heroeswm.ru/i/artifacts/14shield_b.png">Щит наследия 30/30 [i]</div>
+        </div>
+      </div>
+      <div class="block block--parts">
+        <div class="block__title">части артефактов</div>
+        <div class="select select--parts" data-max="20">
+          <div class="option" data-id="ARTPART_imp_crossbow" data-amount="94"><img src="https://dcdn.heroeswm.ru/i/artifacts/parts/part_imp_crossbow.png?v=3">Имперский арбалет</div>
+          <div class="option" data-id="ARTPART_heaven_helm" data-amount="24"><img src="https://dcdn.heroeswm.ru/i/artifacts/parts/part_heaven_helm.png?v=3">Небесная диадема</div>
+          <div class="option" data-id="ARTPART_heaven_armr" data-amount="31"><img src="https://dcdn.heroeswm.ru/i/artifacts/parts/part_heaven_armr.png?v=3">Небесный доспех</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function() {
+      "use strict";
+
+      !Element.prototype.closest && (Element.prototype.closest = function(s) {
+        var that = this, slice = $.toArray, test, parent;
+
+        function checkParent(e) {
+          return e.parentNode === parent;
+        }
+
+        while ((parent = that.parentNode)) {
+          test = slice(parent.querySelectorAll(s)).filter(checkParent).indexOf(that) >= 0;
+
+          if (test) return that;
+
+          that = parent;
+        }
+
+        return null;
+      });
+
+      var $ = (function(reg) {function fn(e, c) {if (e.nodeType) return e;if (!c && e[0] === '#' && !reg.test(e)) return document.getElementById(e.slice(1));if (c && typeof c === 'string') c = fn(c);return (c === null) ? c : (c || document).querySelector(e);}function extend(target, source) {for (var key in source) {target[key] = source[key];}return target;}return extend(fn, {toArray: function(a) {var res = [], i = 0;for (; i < a.length; res.push(a[i++]));return res;},parseNode: function(html, callback) {var div = document.createElement('div'); div.innerHTML = html; div = div.firstChild.cloneNode(!0); callback && callback(div); return div;},index: function(e) {return fn.toArray(e.parentNode.children).indexOf(e);},rnd: function(n) {return Math.random() * n >> 0;},extend: extend});})(/[\s.,:>+~\[]/);
+
+      var $$ = function(s, c) {c = c && $(c);return (c === null) ? [] : $.toArray((c || document).querySelectorAll(s));};
+
+      var formData = {};
+
+      var lotData = (function(style) {
+        document.head.appendChild(style);
+
+        return {
+          select: function() {
+            style.textContent = '.option[data-id="' + this.id + '"] {background: #f8e9bb}';
+            return this;
+          },
+          fill: function(that) {
+            return $.extend(this, that);
+          }
+        };
+      })(document.createElement('style'));
+
+      var formSection = (function(section) {
+        var priceEls;
+        var form = section.lastElementChild;
+        var lot = $('.form-lot');
+
+        var elems = 'name count price blizprice duration'.split(' ').reduce(function(that, key) {
+          that[key] = $('.form__' + key, form);
+          return that;
+        }, {});
+
+        var change = (function(time, test) {
+          function toLocaleString(number) {
+            if (test) return number.toLocaleString('en-En');
+
+            number += '';
+
+            switch (number.length) {
+              case 4: number = number[0] + ',' + number.slice(1); break;
+              case 5: number = number.slice(0, 2) + ',' + number.slice(2); break;
+              case 6: number = number.slice(0, 3) + ',' + number.slice(3); break;
+              case 7: number = number[0] + ',' + number.slice(1, 4) + ',' + number.slice(4); break;
+              case 8: number = number.slice(0, 2) + ','  + number.slice(2, 5) + ',' + number.slice(5); break;
+            }
+
+            return number;
+          }
+
+          try {
+            test = Number(5).toLocaleString('en-En');
+          } catch(e) {}
+
+          return function(that) {
+            if (that.isRange) {
+              that.output.textContent = !that.ind ? this.value : time[this.value - 1];
+            } else {
+              that.output.textContent = this.value < 1000 ? this.value : toLocaleString(+this.value);
+            }
+          };
+        })('30 мин.|1 час|3 часа|6 часов|12 часов|1 день|2 дня|3 дня'.split('|'), null);
+
+        function wheel(that, e) {
+          var deltaY = e.deltaY;
+          var value = +this.value;
+          var step = e.altKey ? 1e3 : e.ctrlKey ? 100 : e.shiftKey ? 10 : 1;
+
+          e.preventDefault();
+          deltaY > 0 ? value -= step : value += step;
+
+          if (value < this.min) value = this.min;
+          else if (this.max && value > this.max) value = this.max;
+
+          this.value = value;
+          change.call(this, that);
+        }
+
+        $$('.form__input').forEach(function(input, ind) {
+          var type = ('oninput' in input) ? 'input' : 'change';
+          var data = { ind: ind, isRange: input.type === 'range', output: input.nextSibling };
+
+          input.addEventListener(type, change.bind(input, data));
+
+          if ('onwheel' in input) input.addEventListener('wheel', wheel.bind(input, data));
+        });
+
+        $.extend(formData, {
+          type: 1,
+          target: form,
+          elements: elems,
+          setImg: function() {
+            lot.style.backgroundImage = 'url("' + lotData.imgSrc + '")';
+            return this;
+          },
+          setName: function() {
+            elems.name.textContent = lotData.name;
+            return this;
+          },
+          setType: function(type) {
+            form.dataset.type = type;
+            return this;
+          },
+          recount: function() {
+            var el = elems.count;
+            var amount = lotData.amount, max = lotData.max;
+
+            if (!priceEls) priceEls = [elems.price.parentNode.previousElementSibling, elems.price];
+
+            if (max === 20) {
+              el.max = 20;
+              el.nextSibling.textContent = el.defaultValue = el.value = (amount < 20 ? 0 : 20);
+              priceEls[0].textContent = (priceEls[1].placeholder = 'Цена за все части...').slice(0, -3) + ':';
+
+              return this;
+            }
+            if (this.type === 2) {
+              max = 1;
+              priceEls[0].textContent = (priceEls[1].placeholder = 'Начальная цена...').slice(0, -3) + ':';
+            } else {
+              priceEls[0].textContent = (priceEls[1].placeholder = 'Цена за единицу...').slice(0, -3) + ':';
+            }
+
+            if (amount <= 0) max = 0;
+            else if (max > amount) max = amount;
+
+            el.max = max;
+            el.defaultValue = 1;
+
+            if (el.nextSibling.textContent > max) el.nextSibling.textContent = max;
+
+            return this;
+          }
+        });
+
+        return section;
+      })($('.section'));
+
+      $('.content').addEventListener('click', function(e) {
+        var trg = e.target;
+        var block = trg.closest('.block');
+
+        if (block && trg === block.firstElementChild) {
+          block.dataset.shown ^= 1;
+        } else if (/option/.test(trg.className)) {
+          var dataset = trg.dataset;
+          var id = dataset.id;
+          var cat = trg.parentNode.className.match(/\w+$/)[0];
+
+          lotData.fill({
+            target: trg,
+            id: id,
+            category: cat,
+            name: trg.textContent,
+            amount: +dataset.amount,
+            max: +trg.parentNode.dataset.max,
+            imgSrc: trg.firstElementChild.src,
+          }).select();
+
+          formSection.removeAttribute('disabled');
+          formData.setImg().setName().recount();
+          formData.target.dataset.category = cat;
+        } else if (/form__type/.test(trg.className)) {
+          formData.setType((formData.type = 1 + $.index(trg))).recount();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
