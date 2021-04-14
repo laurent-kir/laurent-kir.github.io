@@ -333,6 +333,10 @@
   border-color: #69a0d1;
   outline: 1px solid skyblue;
 }
+.form__input[type="number"]:invalid {
+  outline: 1px solid #d54e4e;
+  box-shadow: 0 0 4px #e7a4b0;
+}
 [data-type="1"] .form__blizprice[class] {
   color: gray;
   background-color: #ddd;
