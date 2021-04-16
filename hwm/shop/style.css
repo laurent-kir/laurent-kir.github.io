@@ -414,13 +414,13 @@ html, body {
   -webkit-background-size: cover;
   background-size: cover;
 }
-.art__craft--I3 {background-image: url("https://dcdn3.heroeswm.ru/i/mods/weapon/I3.gif");}
-.art__craft--D3 {background-image: url("https://dcdn3.heroeswm.ru/i/mods/armor/D3.gif");}
 .art__craft--N10 {background-image: url("https://dcdn3.heroeswm.ru/i/mods/neutral/N10.gif");}
 .art__craft--E10 {background-image: url("https://dcdn3.heroeswm.ru/i/mods/neutral/E10.gif");}
 .art__craft--A10 {background-image: url("https://dcdn3.heroeswm.ru/i/mods/neutral/A10.gif");}
 .art__craft--W10 {background-image: url("https://dcdn3.heroeswm.ru/i/mods/neutral/W10.gif");}
 .art__craft--F10 {background-image: url("https://dcdn3.heroeswm.ru/i/mods/neutral/F10.gif");}
+.art__craft--I3, .art__craft--I10 {background-image: url("https://dcdn3.heroeswm.ru/i/mods/weapon/I3.gif");}
+.art__craft--D3, .art__craft--D10 {background-image: url("https://dcdn3.heroeswm.ru/i/mods/armor/D3.gif");}
 
 /* name */
 
