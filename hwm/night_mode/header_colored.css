@@ -1,0 +1,92 @@
+#main_top_table b,
+#main_top_table table.hwm_tb * {
+  color: #ffd875;
+}
+#main_top_table div[id^="menuSetsTab"] {
+  color: #ffd875 !important;
+}
+#main_top_table td[width="88"] {
+  border-width: 0 !important;
+}
+#main_top_table td[height="17"] {
+  color: #ccc;
+}
+
+#main_top_table img,
+#main_top_table td {
+  -webkit-filter: none !important;
+  filter: none !important;
+}
+#main_top_table img[src$="_topll_80.jpg"],
+#main_top_table img[src$="_topr2_80.jpg"] {
+  content: url("https://i.ibb.co/frf905t/res-line-topll-80.png");
+}
+#main_top_table img[src$="_top0.jpg"],
+#main_top_table img[src$="_toprr.jpg"] {
+  content: url("https://i.ibb.co/T8pgh0r/res-line-top0.png");
+}
+#main_top_table img[src$="logot.jpg"] {
+  content: url("https://i.ibb.co/nsWmc8k/logot.png");
+}
+#main_top_table td[style$="/right_big.jpg);"] {
+  background-image: url("https://i.ibb.co/9hK2xrd/right-big.png") !important;
+}
+#main_top_table td[style*="/lbkg.jpg"] {
+  background-image: url("https://i.ibb.co/b5q3Dwj/lbkg.png") !important;
+}
+#main_top_table img[src*="dragon"] {
+  content: url("https://i.ibb.co/wgLHkFj/dragon-left.png");
+}
+#main_top_table img[src$="/left_big0_56.jpg"] {
+  content: url("https://i.ibb.co/y69yYWQ/left-big0-56.png");
+}
+#main_top_table img[src$="/left_big2_92.jpg"] {
+  content: url("https://i.ibb.co/xm7g9sD/left-big2-92.png");
+}
+#main_top_table img[src$="dec_88.jpg"] {
+  content: url("https://i.ibb.co/gVJb89v/ldec-88.png");
+}
+#main_top_table img[src$="part.jpg"] {
+  content: url("https://i.ibb.co/p4zM1ym/lpart.png");
+}
+#main_top_table img[src$="32_39.jpg"] {
+  content: url("https://i.ibb.co/sgTGdSb/h-top-32-39.png");
+}
+#main_top_table img[src$="32_10.jpg"] {
+  content: url("https://i.ibb.co/GdGQsWm/h-top-32-10.png");
+}
+#main_top_table img[src*="_bot"][src$="_80.jpg"] {
+  content: url("https://i.ibb.co/mFwH3rS/res-line-botl-80.jpg");
+}
+#main_top_table img[src$="t_end.jpg"] {
+  content: url("https://i.ibb.co/n650yBY/t-end.png");
+}
+#main_top_table img[src$="_bot0.jpg"],
+#main_top_table img[src$="_botrr.jpg"] {
+  content: url("https://i.ibb.co/Dfdj0gZ/res-line-bot0.png");
+}
+
+#main_top_table td[style$="/bkgtop.jpg);"] {
+  position: relative;
+  background-image: url("https://i.ibb.co/rc0qfLf/res-line-topc.png") !important;
+}
+#main_top_table td[style$="/bkgtop.jpg);"]:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #222;
+}
+
+#main_top_table img[src$="topr2_80.jpg"],
+#main_top_table img[src$="botr_80.jpg"],
+#main_top_table img[src$="rdec_88.jpg"],
+#main_top_table img[src$="rpart.jpg"],
+#main_top_table img[src$="line_32_39.jpg"],
+#main_top_table img[src$="right_36.jpg"] {
+  -o-transform: scaleX(-1);
+  -ms-transform: scaleX(-1);
+  -moz-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
