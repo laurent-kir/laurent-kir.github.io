@@ -12,9 +12,7 @@
   100% {-webkit-transform: rotate(360deg); transform: rotate(360deg);}
 }
 
-html, body {
-  scroll-behavior: smooth;
-}
+
 [hidden] {
   display: none !important;
 }
@@ -120,8 +118,8 @@ html, body {
   background-color: #fff;
 }
 [data-params]:not([data-params*="rent="]) .shop__tabs > .shop__tab:nth-child(1),
-[data-params*="rent=1"] .shop__tabs > .shop__tab:nth-child(2),
-[data-params*="rent=2"] .shop__tabs > .shop__tab:nth-child(3) {
+[data-params*="rent=1"] .shop__tab:nth-child(2),
+[data-params*="rent=2"] .shop__tab:nth-child(3) {
   font-weight: bold;
   color: #b00;
   background-color: #fff;
@@ -215,8 +213,6 @@ html, body {
 #nav-flag {
   position: absolute;
   top: 0; right: 2px;
-  height: 26px;
-  background-color: #867157;
   pointer-events: none;
   opacity: 0;
   -webkit-transition: top 0.2s, opacity 1s;
@@ -332,9 +328,8 @@ html, body {
   background-color: #f2f2f2;
 }
 .art.art--target {
-  background-color: #ebe7cf;
-  -webkit-animation: target 1s ease-out;
-  animation: target 1s ease-out;
+  -webkit-animation: target 1s ease-out forwards;
+  animation: target 1s ease-out forwards;
 }
 .art:not([hidden]) ~ .art {
   border-top-width: 1px;
@@ -502,11 +497,15 @@ html, body {
 .art__btn:not([tabindex="-1"]):active {
   top: 1px; left: 1px;
 }
-.art__btn:not([tabindex="-1"]):after {
+.art__btn:after {
   content: "";
   position: absolute;
   top: 2px; right: 2px; bottom: 2px; left: 2px;
   border: 1px dashed #999;
+}
+.art__btn[tabindex="-1"]:after,
+[data-state~="locked"] .art__btn:after {
+  display: none;
 }
 
 /* purchase */
@@ -775,8 +774,8 @@ html, body {
   user-select: none;
 }
 [data-state="locked"] .a-link.art__btn {
-  background-color: #ddd !important;
-  border-color: #aaa #bbb #bbb #aaa !important;
+  background-color: #ddd;
+  border-color: #aaa #bbb #bbb #aaa;
   box-shadow: none;
   filter: grayscale(.7);
 }
@@ -887,6 +886,9 @@ html, body {
   .shop__nav > a:nth-child(odd) {
     border-right: 1px solid silver;
   }
+  [night-mode] .shop__nav > a:nth-child(odd) {
+    border-right-color: #666;
+  }
   .shop__nav > a:nth-child(odd):last-of-type {
     width: 100%;
     border-right: none;
@@ -936,4 +938,157 @@ html, body {
   .shop__nav > a:nth-child(2) {
     border-top-width: 1px;
   }
+}
+
+/* ===== DARK STYLE ===== */
+
+@-webkit-keyframes targetDark {0%, 10% {background-color: #63849b;}100% {background-color: #3e4951;}}
+@keyframes targetDark {0%, 10% {background-color: #63849b;}100% {background-color: #3e4951;}}
+
+[night-mode] .shop__main {
+  color: #ddd;
+}
+[night-mode] .shop__main * {
+  border-color: #777;
+}
+[night-mode] .shop__main a[href]:hover {
+  color: #d8a25a !important;
+}
+[night-mode] .shop__tab {
+  color: #eee;
+  background-color: #333;
+}
+[night-mode] .shop__nav-box {
+  -webkit-box-shadow: 2px 2px 4px #111;
+  box-shadow: 2px 2px 4px #111;
+}
+[night-mode] .shop__nav-box > .shop__tab,
+[night-mode] .shop__filter {
+  background-color: #282828;
+}
+[night-mode] .shop__nav {
+  background-color: #333;
+}
+[night-mode] .shop__nav > a {
+  border-top-color: #666;
+}
+[night-mode] .shop__tab,
+[night-mode] .shop__nav > a {
+  color: #dacfbf !important;
+}
+[night-mode] [data-params]:not([data-params*="rent="]) .shop__tabs > .shop__tab:nth-child(1),
+[night-mode] [data-params*="rent=1"] .shop__tab:nth-child(2),
+[night-mode] [data-params*="rent=2"] .shop__tab:nth-child(3),
+[night-mode] .shop__nav > :focus,
+[night-mode] .shop__nav > :hover,
+[night-mode] .shop__nav > [href="#"] {
+  color: #d8a25a !important;
+  background-color: #555;
+}
+[night-mode] #nav-flag:before {
+  border-right-color: #bbb;
+}
+[night-mode] #toTop > a {
+  color: #ddd;
+}
+[night-mode] #toTop > a:hover {
+  color: #fff !important;
+}
+[night-mode] #shop__filter {
+  color: #eee;
+  background-color: #555;
+}
+[night-mode] #shop__filter::placeholder {
+  color: #ccc;
+}
+[night-mode] .shop__filter > span {
+  color: #a0b9a1;
+}
+[night-mode] .shop__arts-box {
+  color: #eee;
+  background-color: #333;
+}
+[night-mode] .art:nth-child(even) {
+  background-color: #444;
+}
+[night-mode] .art.art--target {
+  -webkit-animation: targetDark 1s ease-out forwards;
+  animation: targetDark 1s ease-out forwards;
+}
+[night-mode] .art__name,
+[night-mode] .art__type {
+  color: #f3c383 !important;
+}
+[night-mode] .art__name > a {
+  color: inherit !important;
+}
+[night-mode] .art__name > a[href]:hover {
+  color: #eda53b !important;
+}
+[night-mode] .art__prop,
+[night-mode] .art__cost:before,
+[night-mode] .a-purchase:before {
+  color: #ccc;
+}
+[night-mode] .art__buy,
+[night-mode] .art__descr,
+[night-mode] .art__block--right:before,
+[night-mode] .art__modifiers:before {
+  color: #aaa;
+}
+[night-mode] .art__buy > a:not(.a-link),
+[night-mode] .art__buy > .a-buy[href="#"] {
+  color: inherit !important;
+}
+[night-mode] .a-buy:not([href="#"]),
+[night-mode] .art__prop > span,
+[night-mode] .res-in-gold:before,
+[night-mode] .art__modifiers--secondary span,
+[night-mode] .art__modifiers--extra span,
+[night-mode] .art__descr > span,
+[night-mode] .a-purchase {
+  color: tan;
+}
+[night-mode] .art__purchase:before {
+  border-color: #a0c6e5;
+  border-right-color: transparent;
+}
+[night-mode] .art--unavailable .a-lvl > span {
+  color: #f18d86;
+}
+[night-mode] .art__level {
+  color: #293e29;
+  background-color: #a0b9a1;
+}
+[night-mode] .art--unavailable .art__level {
+  background-color: #633e3e;
+}
+[night-mode] .boosterAlert {
+  color: #91a0a7;
+}
+[night-mode] .rent__select {
+  color: #ddd;
+  background-color: #333;
+}
+[night-mode] .rent__select:hover,
+[night-mode] .rent__select:focus {
+  border-color: #69a0d1;
+}
+[night-mode] .art__btn[class] {
+  color: #eee;
+  background-color: #5b4d4c;
+  border: 2px solid #999;
+  border-color: #999 #777 #777 #999;
+}
+:root[night-mode] .art__btn:not([tabindex="-1"]):focus,
+:root[night-mode] .art__btn:not([tabindex="-1"]):hover {
+  color: #eee !important;
+  background-color: #604847;
+}
+[night-mode] .art__btn[tabindex="-1"],
+[night-mode] [data-state="locked"] .rent__select,
+[night-mode] [data-state="locked"] .art__btn {
+  color: #bbb !important;
+  background-color: #888 !important;
+  border-color: #aaa;
 }
