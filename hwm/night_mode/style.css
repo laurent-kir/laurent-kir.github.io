@@ -748,9 +748,9 @@ img[src$="/mtp3.jpg"] {
 :root .inventory_item_div_wide {
   background-color: #444;
 }
-.inventory_item_in_rent + div .cre_mon_image2 {
+.inventory_item_in_rent ~ div .cre_mon_image2 {
   background-color: rgba(113, 196, 223, .3);
 }
-.inventory_item_broken + div .cre_mon_image2 {
+.inventory_item_broken ~ div .cre_mon_image2 {
   background-color: rgb(255, 17, 0, .3);
 }
