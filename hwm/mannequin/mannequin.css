@@ -14,11 +14,15 @@ body {
   /* Поскольку фракций мильон, картинку можно и в html прописывать, в аттрибуте style.
   Алсо все рисунки манекенов нужно обрезать так, чтоб не оставалось пустых полей по бокам.
   Позиционирование через CSS (хоть так, хоть эдак). */
-  background: url("img/mannequin.png") no-repeat center /contain;
+  background: url("img/mannequin.png") no-repeat center 0 /auto 100%;
   background-color: #fff7;
   outline: 1px solid #999;
   overflow: hidden;
   user-select: none;
+  transition: background-size .3s ease-out;
+}
+.hero:hover {
+  background-size: auto 150%;
 }
 .hero__equip {
   float: left;
