@@ -1,0 +1,133 @@
+body {
+  margin: 0;
+  padding: 1em;
+  color: #592c08;
+  background-color: #ddd9cd;
+}
+
+.hero {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  width: 50%;
+  min-width: 240px;
+  max-width: 400px;
+  /* Поскольку фракций мильон, картинку можно и в html прописывать, в аттрибуте style.
+  Алсо все рисунки манекенов нужно обрезать так, чтоб не оставалось пустых полей по бокам.
+  Позиционирование через CSS (хоть так, хоть эдак). */
+  background: url("img/mannequin.png") no-repeat center /contain;
+  background-color: #fff7;
+  outline: 1px solid #999;
+  overflow: hidden;
+  user-select: none;
+}
+.hero__equip {
+  float: left;
+  margin-left: 4px;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+.hero__equip:last-child {
+  float: right;
+  margin-left: auto;
+  margin-right: 4px;
+}
+.hero__slot {
+  width: 60px;
+  height: 60px;
+  position: relative;
+  margin: 4px 0;
+  background: no-repeat center /contain;
+  background-color: #fff5;
+}
+.hero__slot:hover {
+  box-shadow: inset 0 0 6px gold;
+  filter: sepia(1);
+}
+.hero__slot:not(:empty) {
+  background-image: none;
+  filter: none;
+}
+
+/* Ниже идут бэкграунды пустых слотов.
+У каждой картинки есть недочет: граница -- часть самого изображения.
+По правилам хорошей верстки все тени и границы должны добавляться через CSS.
+Не помешает перефотошопить, опять-таки. */
+
+[data-slot="head"] {
+  background-image: url("img/slots/head.png");
+}
+[data-slot="body"] {
+  background-image: url("img/slots/body.png");
+}
+[data-slot="back"] {
+  background-image: url("img/slots/back.png");
+}
+[data-slot="foot"] {
+  background-image: url("img/slots/foot.png");
+}
+[data-slot="hand-l"] {
+  background-image: url("img/slots/hand-l.png");
+}
+[data-slot="hand-r"] {
+  background-image: url("img/slots/hand-r.png");
+}
+[data-slot="neck"] {
+  background-image: url("img/slots/neck.png");
+}
+[data-slot="ring"] {
+  background-image: url("img/slots/ring.png");
+}
+[data-slot="bag"] {
+  background-image: url("img/slots/bag.png");
+}
+[data-slot="mirror"] {
+  background-image: url("img/slots/mirror.png");
+}
+[data-slot="transport"] {
+  background-image: url("img/slots/transport.png");
+  pointer-events: none;
+}
+
+/* Блок-артефакт в html сразу делаем ссылкой,
+чтоб не плодить лишние оболочки вида `a > div` */
+
+.art {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: relative;
+  /* Бэкграунд артов пишем в CSS,
+  чтоб не засорять разметку ненужными <img />;
+  исключения обрабатываем через аттрибут style. */
+  background: url("img/art_bg.png") no-repeat center /cover;
+}
+.art__img {
+  width: 100%;
+  display: block;
+}
+.art:hover > .art__img {
+  filter: brightness(1.2);
+}
+.art__dur {
+  font-size: .9em;
+  position: absolute;
+  left: 1px; top: 1px;
+  padding: 1px;
+  color: #111;
+  background-color: #fff7;
+}
+.info {
+  position: absolute;
+  right: 2px; top: 0;
+  color: #ddd;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black;
+}
+
+@media screen and (max-height: 440px) {
+  .hero__slot {
+    width: 54px;
+    height: 54px;
+  }
+}
