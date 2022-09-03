@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume</title>
+    <link rel="shortcut icon" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Philosopher:wght@700&family=Roboto&display=swap">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <aside class="sidebar json"></aside>
+    <main class="main">
+      <header>
+        <section class="info">
+          <img class="info__avatar" src="avatar.png" alt="Avatar" width="151">
+          <div class="info__body">
+            <h1 class="heading info__name" data-ru="Лоран Кирсаковский">Laurent Kirsakowsky</h1>
+            <div style="margin-bottom: 1em;"><em>Frontend-developer</em></div>
+            <div><i class="icon-date"></i>27.06.1995</div>
+            <div><i class="icon-location"></i><span data-ru="Россия, г. Брянск">Bryansk, Russian Federation</span></div>
+            <adress class="info__contacts">
+              <div><i class="icon-mail"></i><a class="info__link" href="mailto:kirsakowsky@gmail.com">kirsakowsky@gmail.com</a></div>
+              <div><i class="icon-tg"></i><a class="info__link" href="https://t.me/laurent_kir">laurent_kir</a></div>
+            </adress>
+          </div>
+        </section>
+        <aside class="skills">
+          <h3 class="heading skills__title"><i class="icon-code"></i><span data-ru="Тех. навыки">Code skills</span></h3>
+          <div class="skills__body">
+            <div class="skill" style="--exp:85%;">
+              <div class="skill__name"><i class="icon-html"></i>HTML / HTML5, Pug</div>
+              <div class="skill__track"></div>
+            </div>
+            <div class="skill" style="--exp:75%;">
+              <div class="skill__name"><i class="icon-css"></i>CSS / CSS3, Sass / SCSS</div>
+              <div class="skill__track"></div>
+            </div>
+            <div class="skill" style="--exp:70%;">
+              <div class="skill__name"><i class="icon-js"></i>JavaScript / ES6+</div>
+              <div class="skill__track"></div>
+            </div>
+            <div class="skill" style="--exp:20%;">
+              <div class="skill__name"><i class="icon-ts"></i>TypeScript</div>
+              <div class="skill__track"></div>
+            </div>
+            <div class="skill" style="--exp:33%;">
+              <div class="skill__name"><i class="icon-react"></i>React</div>
+              <div class="skill__track"></div>
+            </div>
+            <div class="skill" style="--exp:48%;">
+              <div class="skill__name"><i class="icon-git"></i>Git</div>
+              <div class="skill__track"></div>
+            </div>
+          </div>
+        </aside>
+      </header>
+      <section class="section experience">
+        <h3 class="heading section__title" data-ru="Опыт работы">Work experience</h3>
+        <div class="block job">
+          <div class="block__label job__label"><span data-ru="Октябрь">October</span>, 2020 &mdash; <span data-ru="Июнь">June</span>, 2022</div>
+          <div class="block__info">
+            <h4 class="job__title" data-ru="Фриланс">Freelance</h4>
+            <div class="job__kind">Frontend-developer</div>
+            <ul>
+              <li data-ru="Верстка сайтов">Creating websites</li>
+              <li data-ru="Адаптация приложений под мобильные девайсы">Apps adaptation for mobile-devices</li>
+              <li data-ru="Рефакторинг кода">Code refactoring</li>
+              <li data-ru="Написание скриптов">Scripting</li>
+              <li data-ru="Разработка мини-игр">Mini-games development</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="section more">
+        <h3 class="heading section__title" data-ru="Доп. информация">More</h3>
+        <div class="block">
+          <div class="block__label" data-ru="Прочитанные книги">Books read</div>
+          <div class="block__info">
+            <ul>
+              <li data-ru="Дж. Дакетт, &quot;HTML и CSS. Разработка и создание веб-сайтов&quot;">J. Duckett, "HTML & CSS: Design and Build Web Sites"</li>
+              <li data-ru="Дж. Дакетт, &quot;JavaScript и jQuery. Интерактивная веб-разработка&quot;">J. Duckett, "JavaScript and JQuery: Interactive Front-End Web Development"</li>
+              <li data-ru="Д. Флэнаган, &quot;JavaScript. Карманный справочник&quot;">D. Flanagan, "JavaScript: Pocket Reference"</li>
+              <li data-ru="Д. Крокфорд, &quot;Как устроен JavaScript&quot;">D. Crockford, "How JavaScript Works"</li>
+              <li data-ru="Р. Чекко, &quot;Графика на JavaScript&quot;">R. Cecco, "Supercharged JavaScript Graphics"</li>
+              <li data-ru="А. Бэнкс, Е. Порселло, &quot;React и Redux. Функциональная веб-разработка&quot;">A. Banks, E. Porcello, "Learning React: Functional Web Development with React and Redux"</li>
+            </ul>
+          </div>
+        </div>
+        <div class="block">
+          <div class="block__label" data-ru="Изучаю сейчас">In learning</div>
+          <div class="block__info">
+            <ul>
+              <li>React</li>
+              <li>TypeScript</li>
+              <li>Webpack</li>
+            </ul>
+          </div>
+        </div>
+        <div class="block">
+          <div class="block__label" data-ru="Обо мне">About me</div>
+          <div class="block__info">
+            <code>
+              console.<span class="token-func">log</span>(<span class="token-string about">&grave;
+                <span data-ru="Совершенствую английский и пишу код.">Improving my English and writing code.</span>
+                <span data-ru="Пью чай и пишу код.">Drinking tea and writing code.</span>
+                <span data-ru="Сплю и пишу код...">Sleeping and writing code...</span>
+                <span class="scope-interpolation">
+                  <span>${</span>
+                  <span class="token-string" data-ru="'...и пишу код\n'">'...and writing code\n'</span>.
+                  <span class="token-func">repeat</span>(<span class="token-constant">Infinity</span>)
+                  <span>}</span>
+                </span>
+              &grave;</span>)
+            </code>
+          </div>
+        </div>
+        <div class="block">
+          <div class="block__label" data-ru="Личные качества">Personal traits</div>
+          <div class="block__info">
+            <span class="tags">
+              <span class="tag" data-ru="обучаемость">trainability</span>
+              <span class="tag" data-ru="ответственность">responsibility</span>
+              <span class="tag" data-ru="дисциплинированность">discipline</span>
+              <span class="tag" data-ru="перфекционизм">perfectionism</span>
+            </span>
+          </div>
+        </div>
+      </section>
+      <footer>
+        <code>
+          <span class="token-key">return</span>
+          footer.<span class="token-func">createContent</span>(<span class="token-constant">null</span>)
+        </code>
+      </footer>
+    </main>
+    <div id="status-bar">
+      <button id="sidebar-switcher" tabindex="-1"></button>
+      <div style="display: flex;">
+        <span class="select-wrapper">
+          <select id="theme-switcher" tabindex="-1">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="default" selected>OS Default</option>
+          </select>
+        </span>
+        <span class="select-wrapper">
+          <select id="lang-switcher" tabindex="-1">
+            <option value="en" selected>Eng</option>
+            <option value="ru">Ru</option>
+          </select>
+        </span>
+      </div>
+    </div>
+  </body>
+</html>
